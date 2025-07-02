@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Círculo central pulsante -->
+  <circle cx="60" cy="60" r="20" fill="#10b981">
+    <animate attributeName="r" values="20;30;20" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- Sombra expansiva externa -->
+  <circle cx="60" cy="60" r="40" fill="#10b981" opacity="0.2">
+    <animate attributeName="r" values="40;60;40" dur="3s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.2;0;0.2" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg>
