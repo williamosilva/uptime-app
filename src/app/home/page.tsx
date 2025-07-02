@@ -25,7 +25,7 @@ export default function HomePage() {
   const [uptime, setUptime] = useState(0);
   const [servicesData, setServicesData] = useState<ServicesData | null>(null);
   const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodValue>(7);
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodValue>("today");
   const [loading, setLoading] = useState(false);
   const [loadingServices, setLoadingServices] = useState(false);
   const [error, setError] = useState<string | null>(null);
