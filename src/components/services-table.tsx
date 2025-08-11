@@ -72,6 +72,16 @@ function ServicesTable({ servicesData, loading = false }: ServicesTableProps) {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const getActiveServices = () => {
+    if (!servicesData?.services) return {};
+
+    return Object.fromEntries(
+      Object.entries(servicesData.services).filter(([serviceName, service]) => {
+        return service.avgResponseTime > 0 || service.uptime > 0;
+      })
+    );
+  };
+
   if (loading) {
     return (
       <div className="bg-slate-900 rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
@@ -105,6 +115,7 @@ function ServicesTable({ servicesData, loading = false }: ServicesTableProps) {
       </div>
     );
   }
+  const activeServices = getActiveServices();
 
   return (
     <div className="bg-slate-900 rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
@@ -159,54 +170,50 @@ function ServicesTable({ servicesData, loading = false }: ServicesTableProps) {
               </tr>
             </thead>
             <tbody>
-              {Object.entries(servicesData.services).map(
-                ([serviceName, service]) => (
-                  <tr
-                    key={serviceName}
-                    className="border-b border-slate-700/20 hover:bg-slate-700/20 transition-colors"
-                  >
-                    <td className="py-4 px-6">
-                      <div className="flex items-center space-x-3">
-                        {getServiceIcon(serviceName)}
-                        <span className="font-medium text-slate-200">
-                          {formatServiceName(serviceName)}
-                        </span>
-                      </div>
-                    </td>
-
-                    <td className="py-4 px-6">
-                      <span className="font-semibold text-slate-200">
-                        {formatResponseTime(service.avgResponseTime)}ms
+              {Object.entries(activeServices).map(([serviceName, service]) => (
+                <tr
+                  key={serviceName}
+                  className="border-b border-slate-700/20 hover:bg-slate-700/20 transition-colors"
+                >
+                  <td className="py-4 px-6">
+                    <div className="flex items-center space-x-3">
+                      {getServiceIcon(serviceName)}
+                      <span className="font-medium text-slate-200">
+                        {formatServiceName(serviceName)}
                       </span>
-                    </td>
+                    </div>
+                  </td>
 
-                    <td className="py-4 px-6">
-                      <div className="flex items-center">
-                        <UptimePie percentage={service.uptime} />
-                        <span
-                          className={`font-semibold ${getUptimeColor(
-                            service.uptime
-                          )}`}
-                        >
-                          {service.uptime.toFixed(1)}%
-                        </span>
-                      </div>
-                    </td>
+                  <td className="py-4 px-6">
+                    <span className="font-semibold text-slate-200">
+                      {formatResponseTime(service.avgResponseTime)}ms
+                    </span>
+                  </td>
 
-                    <td className="py-4 px-6 text-center">
-                      <button
-                        onClick={() => handleServiceCheck(service.url)}
-                        className="inline-flex items-center justify-center w-8 h-8 text-slate-400 hover:text-blue-400 hover:bg-slate-700/30 rounded-full transition-colors"
-                        title={`Check ${formatServiceName(
-                          serviceName
-                        )} manually`}
+                  <td className="py-4 px-6">
+                    <div className="flex items-center">
+                      <UptimePie percentage={service.uptime} />
+                      <span
+                        className={`font-semibold ${getUptimeColor(
+                          service.uptime
+                        )}`}
                       >
-                        <ExternalLink className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                )
-              )}
+                        {service.uptime.toFixed(1)}%
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className="py-4 px-6 text-center">
+                    <button
+                      onClick={() => handleServiceCheck(service.url)}
+                      className="inline-flex items-center justify-center w-8 h-8 text-slate-400 hover:text-blue-400 hover:bg-slate-700/30 rounded-full transition-colors"
+                      title={`Check ${formatServiceName(serviceName)} manually`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

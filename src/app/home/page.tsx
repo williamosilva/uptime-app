@@ -39,6 +39,30 @@ export default function HomePage() {
     setIsAuthenticated(true);
   }, [router]);
 
+  const getActiveServiceTabs = (): string[] => {
+    if (!servicesData?.services) return ["Backend", "Frontend", "Supabase"];
+
+    const allTabs = ["Backend", "Frontend", "Supabase"];
+
+    return allTabs.filter((tab) => {
+      const serviceKey =
+        tab.toLowerCase() as keyof typeof servicesData.services;
+      const service = servicesData.services[serviceKey];
+
+      if (!service) return false;
+
+      return service.avgResponseTime > 0 || service.uptime > 0;
+    });
+  };
+
+  const ensureValidActiveTab = (availableTabs: string[]) => {
+    if (availableTabs.length === 0) return;
+
+    if (!availableTabs.includes(activeTab)) {
+      setActiveTab(availableTabs[0]);
+    }
+  };
+
   const generateChartData = (
     data: ResponseTimeData[],
     period: PeriodValue,
@@ -178,6 +202,13 @@ export default function HomePage() {
     }
   }, [selectedPeriod, isAuthenticated]);
 
+  useEffect(() => {
+    if (servicesData) {
+      const availableTabs = getActiveServiceTabs();
+      ensureValidActiveTab(availableTabs);
+    }
+  }, [servicesData, activeTab]);
+
   const handleLogout = () => {
     localStorage.removeItem("authenticated!");
     router.push("/");
@@ -191,16 +222,21 @@ export default function HomePage() {
     );
   }
 
+  const availableTabs = getActiveServiceTabs();
+
   return (
     <div className="min-h-screen bg-slate-950 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="overflow-hidden mb-12">
           <div className="flex items-start justify-between">
-            <div className="text-start">
-              <h1 className="text-4xl font-semibold text-slate-200 mb-0">
-                System Status
-              </h1>
-              <LiveClock />
+            <div className="flex items-center space-x-4">
+              <img src="/logo.svg" alt="Your Logo" className="w-18 h-18" />
+              <div className="text-start">
+                <h1 className="text-4xl font-semibold text-slate-200 mb-0">
+                  System Status
+                </h1>
+                <LiveClock />
+              </div>
             </div>
 
             <button
@@ -213,11 +249,13 @@ export default function HomePage() {
           </div>
         </div>
 
-        <TabSelector
-          tabs={["Backend", "Frontend", "Supabase"]}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
+        {availableTabs.length > 0 && (
+          <TabSelector
+            tabs={availableTabs}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+        )}
 
         <UptimeHeader
           uptime={uptime}
