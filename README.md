@@ -1,5 +1,5 @@
 <div align="center">
-  <h1> UpTime - App <h1/>
+  <h1> UpTime - Frontend App <h1/>
   <img  src="https://i.imgur.com/WbLnrw0.png" alt="UpTime Screenshot 1" width="600"/>
   <br/>
   <img src="https://i.imgur.com/eot4o4g.png" alt="UpTime Screenshot 2" width="600"/>
