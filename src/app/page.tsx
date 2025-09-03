@@ -36,6 +36,11 @@ export default function LoginPage() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    console.log("ENV username:", process.env.NEXT_PUBLIC_LOGIN_USERNAME);
+    console.log("ENV password:", process.env.NEXT_PUBLIC_LOGIN_PASSWORD);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">

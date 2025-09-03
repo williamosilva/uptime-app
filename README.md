@@ -1,5 +1,10 @@
 # UpTime - Frontend
 
+<div align="center">
+  <img src="https://i.imgur.com/WbLnrw0.png" alt="UpTime Screenshot 1" width="400"/>
+  <img src="https://i.imgur.com/eot4o4g.png" alt="UpTime Screenshot 2" width="400"/>
+</div>
+
 Real-time service monitoring system with modern and responsive interface.
 
 ## About the Project
@@ -15,12 +20,14 @@ UpTime is a complete service monitoring system consisting of an integrated front
 ## Setup
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/williamosilva/uptime-app
 cd uptime-app
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 # or
@@ -28,6 +35,7 @@ yarn install
 ```
 
 ### 3. Configure environment variables
+
 Create a `.env` file in the project root:
 
 ```env
@@ -45,6 +53,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 ## Running the Project
 
 ### Development
+
 ```bash
 npm run dev
 # or
@@ -54,18 +63,13 @@ yarn dev
 The application will be available at `http://localhost:3000`
 
 ### Production
+
 ```bash
 npm run build
 npm start
 # or
 yarn build
 yarn start
-```
-
-## Docker
-
-```bash
-docker-compose up -d
 ```
 
 ## Authentication
@@ -88,8 +92,6 @@ For the system to work completely:
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-
 
 ---
 
